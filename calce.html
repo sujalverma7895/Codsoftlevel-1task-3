@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .main {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .cal {
+            margin-bottom: 10px;
+        }
+
+        #show {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.5em;
+            text-align: right;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns:  auto auto auto auto;
+            gap: 10px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ddd;
+        }
+
+        .btn-clear, .btn-equal {
+            background-color: #ff6666;
+            color: white;
+        }
+
+        .btn-clear:hover, .btn-equal:hover {
+            background-color: #ff3333;
+        }
+
+        .btn-operator {
+            background-color: #ffcc00;
+        }
+
+        .btn-operator:hover {
+            background-color: #ff9900;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h1>Calculator</h1>
+        <div class="cal">
+            <input type="text" id="show">
+        </div>
+        <div class="button-container">
+            <button onclick="numbers('7')">7</button>
+            <button onclick="numbers('8')">8</button>
+            <button onclick="numbers('9')">9</button>
+            <button onclick="deletes()" class="btn-delete">DEL</button>
+            <button onclick="numbers('4')">4</button>
+            <button onclick="numbers('5')">5</button>
+            <button onclick="numbers('6')">6</button>
+            <button onclick="operator('+')" class="btn-operator">+</button>
+            <button onclick="numbers('1')">1</button>
+            <button onclick="numbers('2')">2</button>
+            <button onclick="numbers('3')">3</button>
+            <button onclick="operator('-')" class="btn-operator">-</button>
+            <button onclick="numbers('.')">.</button>
+            <button onclick="numbers('0')">0</button>
+            <button onclick="operator('/')" class="btn-operator">÷</button>
+            <button onclick="operator('*')" class="btn-operator">x</button>
+            <button onclick="Ac()" class="btn-clear">AC</button>
+            <button onclick="equal()" class="btn-equal">=</button>
+        </div>
+    </div>
+    <script>
+        let Inputvalue = "";
+        let calculation = [];
+
+        function numbers(number) {
+            Inputvalue += number;
+            document.getElementById('show').value = Inputvalue;
+        }
+
+        function operator(operator) {
+            if (Inputvalue !== "") {
+                calculation.push(Inputvalue);
+                calculation.push(operator);
+                Inputvalue = '';
+            }
+        }
+
+
+        function equal() {
+            if (Inputvalue !== '') {
+                calculation.push(Inputvalue);
+                const result = eval(calculation.join(' '));
+                document.getElementById('show').value = result;
+                Inputvalue = result.toString();
+                calculation = [];
+            }
+        }
+
+        function Ac() {
+            Inputvalue = "";
+            calculation = [];
+            document.getElementById('show').value = "";
+        }
+
+        function deletes() {
+            let display = document.getElementById('show');
+            let currentValue = display.value;
+            display.value = currentValue.slice(0, -1);
+        }
+
+        function resetCalculator() {
+            document.getElementById('show').value = '';
+        }
+    </script>
+</body>
+</html>
